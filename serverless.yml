@@ -1,0 +1,63 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service:
+  name: corona-stats
+  frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  stage: dev
+  region: eu-west-1
+
+  environment: ${file(./env.yml):Env}
+
+functions:
+  getAllCountries:
+    handler: src/handlers/getAllCountries.handler
+    events:
+      - http:
+          method: GET
+          path: /getAllCountries/{page}
+  getAllContinents:
+    handler: src/handlers/getAllContinents.handler
+    events:
+      - http:
+          method: GET
+          path: /getAllContinents
+  getAllCountriesInContinent:
+    handler: src/handlers/getCountriesInContinent.handler
+    events:
+      - http:
+          method: GET
+          path: /getAllCountriesInContinent/{continent}/{page}
+  getCountryData:
+    handler: src/handlers/getCountryData.handler
+    events:
+      - http:
+          method: GET
+          path: /getCountryData/{country}
+  getTopToday:
+    handler: src/handlers/getTopToday.handler
+    events:
+      - http:
+          method: GET
+          path: /getTopToday
+  getWorldData:
+    handler: src/handlers/getWorldData.handler
+    events:
+      - http:
+          method: GET
+          path: /getWorldData
